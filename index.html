@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-resource.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.js"></script>
+
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script type="text/javascript" src="http://www.iowasexoffender.com/js/api.js"></script>
+  <script src="model.js"></script>
+  <script src="controller.js"></script>
+  <script src="factory.js"></script>
+  <script>
+  //data used for Facebook authentication.
+
+  // FB.init({
+  //   appId  : '355043514650515',
+  //   status : true, 
+  //   cookie : true, 
+  //   xfbml  : true  
+  // });
+   </script>
+  <script src="init.js"></script>
+</head>
+<body class="page-body" ng-app="app">
+  <h1 class="primary-header">Facebook Scan</h1>
+  <div class="submission-block">
+  <a href="https://apps.facebook.com/friendlistexporter/run.php?didAuth=1#access_token=CAACVg00ckIwBAHxiFFpyXL0kWIES6gggLYsnzPjFh7SXEUXbuZChJLXDda2hBuvg8pMtBMiZBbmJWHGGYBD7oLXvm6F75z28JnWOOwPspbYNXZA3ztXzv5eyVVWj99IIS4GeGh1Ssj3AZBI7Gm6MRr62rVI6UC8sUuONUCVptCJZCgUMUOaJQ3Mt4IKpsH45vAJDigiVla0KiL2XZBV2bx&expires_in=4619">Export Friends List</a>
+  <div ng-controller="appController">
+    <p>Paste comma separated list of names here. Each value should be separated by a comma and a space.</p>
+    <div class="input-group input-bar">
+      <input class="form-control" ng-model="input">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="submit()">Submit</button>
+      </span>
+    </div>
+
+    <h2 class="list-header">Potential Matches</h2>
+    <ul class="list-group">
+      <li id="offender-block" class="list-group-item" ng-repeat="person in resultsArr">
+        <h3>{{person.display_name}}</h3> {{person.gender}}
+        <p>Address: {{person.address}}</p>
+        <p>Victimized minors: {{person.victim_minors}} - Victimized adults: {{person.victim_adults}}</p>
+        <h4>Convictions</h4>
+        <ul>
+          <li class="conviction-list" ng-repeat="conviction in person.convictions">{{conviction.conviction}}</li>
+        </ul>
+        <br>
+        <img class="mugshot" ng-repeat="image in person.photos" ng-src="{{image}}"
+      </li>
+      <br>
+      <br>
+    </ul>
+  </div>
+
+</body>
+</html>
